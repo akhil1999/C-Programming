@@ -109,6 +109,19 @@ struct node *delete_node(int position, struct node *head){
 	}
 }
 
+struct node *reverse_list(struct node *head){
+	struct node *current, *prev, *next;
+	current = head;
+	prev = NULL;
+	while(current!=NULL){
+		next = current->link;
+		current->link = prev;
+		prev = current;
+		current = next;
+	}
+	return prev;
+}
+
 int main(){
 	//make a linked list now
 	struct node *head = NULL;
@@ -120,5 +133,7 @@ int main(){
 		printList(head);	
 	head = reverse_list(head);
 	head = insert_node(5, 0, head);
+	printList(head);
+	head = reverse_list(head);
 	printList(head);
 }
