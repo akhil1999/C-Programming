@@ -18,13 +18,15 @@ void printList(struct node *head){
 struct node *insert_node(int data, int position, struct node *head){
 	struct node *saved_head_ptr = head;
 	struct node *new_node = (struct node*) malloc(sizeof(struct node));
+	
+	//set data to new_node, this is done irrespective of the position
 	new_node->data=data;
 	
 	if(head == NULL){
 		//if list does not exist, create it.
-		new_node->data =  data;
-		new_node->link = NULL;
-		return new_node;
+		//new_node->link = NULL;
+		//return new_node;
+		goto burgir;
 	}
 	
 	//calculate length of the list
@@ -33,8 +35,9 @@ struct node *insert_node(int data, int position, struct node *head){
 		len++;
 		head = head->link;
 	}
-	head = saved_head_ptr;
 	
+	//reset head pointer because now it is pointing to null after calculating the length of the list.
+	head = saved_head_ptr;
 	
 	if(position>len){
 		printf("bruh, position %d is greater than the size of list\n",position);
@@ -46,6 +49,7 @@ struct node *insert_node(int data, int position, struct node *head){
 	switch (position){
 		case 0:
 			//insert node at the beginning
+			burgir:
 			new_node->link = head;
 			head = new_node;
 			return head;
@@ -78,6 +82,8 @@ struct node *delete_node(int position, struct node *head){
 	struct node *saved_head_ptr = head;
 	struct node *temp = head;
 	struct node *temp1;
+	
+
 	switch (position){
 		case 0:
 			//delete node at the beginning
@@ -112,6 +118,7 @@ int main(){
 		printList(head);
 	head = insert_node(9, 2, head);
 		printList(head);	
-	head = delete_node(2,head);
+	head = reverse_list(head);
+	head = insert_node(5, 0, head);
 	printList(head);
 }
