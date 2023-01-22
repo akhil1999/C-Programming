@@ -6,6 +6,8 @@ struct node{
 	struct node *link;
 };
 
+struct node *head = NULL;
+
 void printList(struct node *head){
 	while(head!=NULL){
 		printf("%d,",head->data);
@@ -122,18 +124,26 @@ struct node *reverse_list(struct node *head){
 	return prev;
 }
 
+void reverse_recursive(struct node *p){
+	if(p->link == NULL){
+		head = p;
+		return;
+	}
+	reverse_recursive(p->link);
+	struct node *q = p->link;
+	q->link = p;
+	p->link = NULL;
+}
+
+
 int main(){
 	//make a linked list now
-	struct node *head = NULL;
+
 	head = insert_node(23, NULL, head);
-		printList(head);
 	head = insert_node(1, 1, head);
-		printList(head);
 	head = insert_node(9, 2, head);
-		printList(head);	
-	head = reverse_list(head);
 	head = insert_node(5, 0, head);
 	printList(head);
-	head = reverse_list(head);
+	reverse_recursive(head);
 	printList(head);
 }
