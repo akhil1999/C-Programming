@@ -1,12 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
-struct bstNode{
-	int data;
-	struct bstNode* left;
-	struct bstNode* right;
-};
+#include "bst.h"
+#include <stdbool.h>
+#include <unistd.h>
 
 int timesCalled = 0;
 int numberOfNodes = 0;
@@ -92,6 +89,27 @@ void findNodes(struct bstNode* root){
 	findNodes(root->right);
 }
 
+void levelOrderTraversal(struct bstNode* root){
+	sleep(1);
+	if(root==NULL){
+		return;
+	}
+	while(!isQueueEmpty()){
+		root = dequeue();
+		if(root == NULL){
+			break;
+		} else {
+			printf("%d,\n", root->data);
+		}
+		if(root->left != NULL){
+			enqueue(root->left);
+		}
+		if(root->right != NULL){
+			enqueue(root->right);
+		}
+	}
+}
+
 
 void main(){
 	root = NULL;
@@ -105,18 +123,15 @@ void main(){
 	root = Insert(root, -69);
 	root = Insert(root, 22);
 	root = Insert(root, 23);
-/*	int number_to_be_searched = 0;*/
-/*	printf("Enter number to search:\n");*/
-/*	scanf("%d", &number_to_be_searched);*/
-/*	if(bstSearch(root,number_to_be_searched) == true) {*/
-/*		printf("found!");*/
-/*	}else{*/
-/*		printf("rip");*/
-/*	}*/
 	printf("min:%d\n", findMin(root));
 	printf("max:%d\n", findMax(root));
 	printf("height:%d\n", findHeight(root));
 	printf("times findHeight called:%d\n", timesCalled);
 	findNodes(root);
 	printf("number of nodes:%d\n", numberOfNodes);
+/*	levelOrderTraversal(root);*/
+	printf("isQueueEmpty?:%d\n", isQueueEmpty());
+
+	enqueue(root);
+	levelOrderTraversal(root);
 }
