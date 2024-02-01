@@ -89,6 +89,7 @@ void findNodes(struct bstNode* root){
 	findNodes(root->right);
 }
 
+//BFS
 void levelOrderTraversal(struct bstNode* root){
 	sleep(1);
 	if(root==NULL){
@@ -110,6 +111,36 @@ void levelOrderTraversal(struct bstNode* root){
 	}
 }
 
+//DFS 1
+void preorderTraversal(struct bstNode* root){
+	if(root == NULL){
+		return;
+	}else{
+		printf("%d\n", root->data);
+	}
+	preorderTraversal(root->left);
+	preorderTraversal(root->right);
+}
+
+//DFS 2
+void inorderTraversal(struct bstNode* root){
+	if(root == NULL){
+		return;
+	}
+	inorderTraversal(root->left);
+	printf("%d\n", root->data);
+	inorderTraversal(root->right);
+}
+
+//DFS 3
+void postorderTraversal(struct bstNode* root){
+	if(root == NULL){
+		return;
+	}
+	postorderTraversal(root->left);
+	postorderTraversal(root->right);
+	printf("%d\n", root->data);
+}
 
 void main(){
 	root = NULL;
@@ -133,5 +164,9 @@ void main(){
 	printf("isQueueEmpty?:%d\n", isQueueEmpty());
 
 	enqueue(root);
-	levelOrderTraversal(root);
+/*	levelOrderTraversal(root);*/
+	preorderTraversal(root);
+/*	printQueue();*/
+	postorderTraversal(root);
+	inorderTraversal(root);
 }
