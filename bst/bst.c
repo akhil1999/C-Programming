@@ -51,6 +51,16 @@ int findMin(struct bstNode* root){
 	}
 }
 
+struct bstNode* findMinPtr(struct bstNode* root){
+	printf("findMinPtr called\n");
+	struct bstNode* min = NULL;
+	if(root->left != NULL){
+		min = findMinPtr(root->left);
+	}else{
+		return root;
+	}
+}
+
 int findMax(struct bstNode* root){
 	int max = 0;
 	if(root->right != NULL){
@@ -142,31 +152,136 @@ void postorderTraversal(struct bstNode* root){
 	printf("%d\n", root->data);
 }
 
+int* array;
+//custom inorder traversal to insert into array
+void inorderTraversalToArray(struct bstNode* root){
+	if(root == NULL){
+		return;
+	}
+	inorderTraversalToArray(root->left);
+	*(array) = root->data;
+	array++;
+	inorderTraversalToArray(root->right);
+}
+
+bool isBST(struct bstNode* root, int* array){
+	int a[numberOfNodes];
+	bool isBST = true;
+	//feed the nodes value from inorder into an array
+	for(int i=0; i<numberOfNodes-1; i++){
+		if(array[i]>array[i+1]){
+			isBST = false;
+		}
+	}
+	return isBST;
+}
+
+
+//animesh sir based way
+struct bstNode* Delete(struct bstNode* root, int data){
+	printf("current node:%d\n", root->data);
+	if(root == NULL){
+		return root;
+	}else if(data < root->data){
+		root->left = Delete(root->left, data);
+	}else if(data > root->data){
+		root->right = Delete(root->right, data);
+	}else{
+		//case 1 : no child
+		if(root->left == NULL && root->right == NULL){
+			free(root);
+			root = NULL;
+		}
+		
+		//case 2: one child 
+		else if(root->left == NULL){
+			struct bstNode* temp = root;
+			root = root->right;
+			free(temp);
+		}
+		
+		else if(root->right == NULL){
+			struct bstNode* temp = root;
+			root = root->left;
+			free(temp);
+		}
+		
+		else{
+			struct bstNode* temp = findMinPtr(root->right);
+			printf("min:%d\n", temp->data);
+			root->data = temp->data;
+			root->right = Delete(root->right, temp->data);
+		}
+	}
+	return root;
+}
+
+//inorder successor
+
+
+
 void main(){
 	root = NULL;
-	root = Insert(root, 15);
-	root = Insert(root, 10);
-	root = Insert(root, 20);
-	root = Insert(root, 25);
-	root = Insert(root, 8);
-	root = Insert(root, 12);
-	root = Insert(root, 1);
-	root = Insert(root, -69);
-	root = Insert(root, 22);
-	root = Insert(root, 23);
-	printf("min:%d\n", findMin(root));
-	printf("max:%d\n", findMax(root));
-	printf("height:%d\n", findHeight(root));
-	printf("times findHeight called:%d\n", timesCalled);
-	findNodes(root);
-	printf("number of nodes:%d\n", numberOfNodes);
+/*	root = Insert(root, 15);*/
+/*	root = Insert(root, 10);*/
+/*	root = Insert(root, 20);*/
+/*	root = Insert(root, 25);*/
+/*	root = Insert(root, 8);*/
+/*	root = Insert(root, 12);*/
+/*	root = Insert(root, 1);*/
+/*	root = Insert(root, -69);*/
+/*	root = Insert(root, 22);*/
+/*	root = Insert(root, 23);*/
+/*	printf("min:%d\n", findMin(root));*/
+/*	printf("max:%d\n", findMax(root));*/
+/*	printf("height:%d\n", findHeight(root));*/
+/*	printf("times findHeight called:%d\n", timesCalled);*/
+/*	findNodes(root);*/
+/*	printf("number of nodes:%d\n", numberOfNodes);*/
 /*	levelOrderTraversal(root);*/
-	printf("isQueueEmpty?:%d\n", isQueueEmpty());
+/*	printf("isQueueEmpty?:%d\n", isQueueEmpty());*/
 
-	enqueue(root);
+/*	enqueue(root);*/
 /*	levelOrderTraversal(root);*/
-	preorderTraversal(root);
+/*	preorderTraversal(root);*/
 /*	printQueue();*/
-	postorderTraversal(root);
-	inorderTraversal(root);
+/*	postorderTraversal(root);*/
+/*	inorderTraversal(root);*/
+	
+	//custom array
+/*	int a[numberOfNodes];*/
+
+/*	array = &a[0];*/
+/*	int* arrayPtr = &a[0];*/
+/*	*/
+/*	for(int i = 0 ; i < 10 ; i++) {*/
+/*		*(arrayPtr+i) = 0;*/
+/*	}*/
+/*		*/
+/*	inorderTraversalToArray(root);*/
+/*	for(int i = 0 ; i < 10 ; i++) {*/
+/*		printf("%d,", *(arrayPtr+i));*/
+/*	}*/
+/*	*/
+/*	printf("isBST?:%d", isBST(root, arrayPtr));*/
+	root = Insert(root, 12);
+	root = Insert(root, 5);
+	root = Insert(root, 3);
+	root = Insert(root, 1);
+	root = Insert(root, 7);
+	root = Insert(root, 9);
+	root = Insert(root, 8);
+	root = Insert(root, 11);
+	root = Insert(root, 15);
+	root = Insert(root, 13);
+	root = Insert(root, 14);
+	root = Insert(root, 17);
+	root = Insert(root, 20);
+	root = Insert(root, 18);
+
+	preorderTraversal(root);
+	
+	Delete(root, 17);
+	printf("\n");
+	preorderTraversal(root);
 }
