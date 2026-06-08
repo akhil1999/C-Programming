@@ -13,10 +13,14 @@ graph:	graph_alt_2.c
 vector: vector.c
 	gcc vector.c -g -o vector
 
+heap:	heap.c
+	gcc heap.c -g -o heap
+
 clean:
 	rm queue
 	rm stack
 	rm list
 	rm graph
 	rm vector
+	rm heap
 
