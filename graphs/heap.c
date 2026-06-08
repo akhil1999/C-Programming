@@ -81,7 +81,7 @@ bool insertHeap(Heap* heap, int data){
 	}
 	return true;
 }
-void heapifyDown(Heap* heap, int i){
+void heapifyDown(Heap* heap, int i, int heap_size){
 	while(true){
 		int left_child = (2*i) + 1;
 		int right_child = left_child + 1;
@@ -96,7 +96,7 @@ void heapifyDown(Heap* heap, int i){
 		    best = left_child;
 		}
 
-		if(right_child < (int)heap->size &&
+		if(right_child < heap_size &&
 		   compare(heap,
 			   heap->data[right_child],
 			   heap->data[best]))
@@ -117,14 +117,14 @@ void heapifyDown(Heap* heap, int i){
 
 int extractRoot(Heap* heap){
 	if(heap == NULL || heap->data == NULL || heap->size == 0){
-		printf("heap not allocated\n");
+		printf("extractRoot, heap not allocated\n");
 		return -1;
 	}
 	int data = heap->data[0];
 	//since data extracted, remove the max and replace it
 	heap->data[0] = heap->data[heap->size-1];
 	heap->size--;
-	heapifyDown(heap, 0);
+	heapifyDown(heap, 0, heap->size);
 	return data;	
 }
 
@@ -159,19 +159,19 @@ void printHeap(Heap* heap){
 	return;
 }
 
-int main(){
-	Heap* myheap = allocateHeap();
-	myheap->isMinHeap  = true;
-	insertHeap(myheap,100);
-	insertHeap(myheap,70);
-	insertHeap(myheap,80);
-	insertHeap(myheap,25);
-	insertHeap(myheap,50);
-	printHeap(myheap);
-	insertHeap(myheap,95);
-	printHeap(myheap);
-	extractRoot(myheap);
-	printHeap(myheap);
-	destroyHeap(myheap);
-	return 0;
-}
+/*int main(){*/
+/*	Heap* myheap = allocateHeap();*/
+/*	myheap->isMinHeap  = true;*/
+/*	insertHeap(myheap,100);*/
+/*	insertHeap(myheap,70);*/
+/*	insertHeap(myheap,80);*/
+/*	insertHeap(myheap,25);*/
+/*	insertHeap(myheap,50);*/
+/*	printHeap(myheap);*/
+/*	insertHeap(myheap,95);*/
+/*	printHeap(myheap);*/
+/*	extractRoot(myheap);*/
+/*	printHeap(myheap);*/
+/*	destroyHeap(myheap);*/
+/*	return 0;*/
+/*}*/

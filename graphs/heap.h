@@ -18,5 +18,7 @@ int extractRoot(Heap* heap);
 int peekRoot(Heap* heap);
 bool isHeapEmpty(Heap* heap);
 void printHeap(Heap* heap);
+void heapifyDown(Heap* heap, int i, int heap_size);
+void swap(int* a, int* b);
 
 #endif
