@@ -31,6 +31,15 @@ void swap(int *a, int *b){
 	return;
 }
 
+bool compare(Heap* heap, int child, int parent){
+
+    if(heap->isMinHeap){
+        return child < parent;
+    }
+
+    return child > parent; // Max Heap
+}
+
 bool insertHeap(Heap* heap, int data){
 	if(heap == NULL){
 		printf("heap not allocated, pls allocate heap!\n");
@@ -63,7 +72,9 @@ bool insertHeap(Heap* heap, int data){
 	}
 	int i = heap->size - 1;
 	int parent = (i - 1) / 2;
-	while(i>0 && heap->data[i] > heap->data[parent]){
+	while(i>0 && compare(heap,
+              heap->data[i],
+              heap->data[parent])){
 		swap(&heap->data[i], &heap->data[parent]);
 		i = parent;
 		parent = (i - 1) / 2;
@@ -75,27 +86,36 @@ void heapifyDown(Heap* heap, int i){
 		int left_child = (2*i) + 1;
 		int right_child = left_child + 1;
 		
-		int largest = i;
-		
-		if(left_child < (int)heap->size && heap->data[left_child] > heap->data[largest]){
-			largest = left_child;
+		int best = i;
+
+		if(left_child < (int)heap->size &&
+		   compare(heap,
+			   heap->data[left_child],
+			   heap->data[best]))
+		{
+		    best = left_child;
 		}
-		
-		if(right_child < (int)heap->size && heap->data[right_child] > heap->data[largest]){
-			largest = right_child;
+
+		if(right_child < (int)heap->size &&
+		   compare(heap,
+			   heap->data[right_child],
+			   heap->data[best]))
+		{
+		    best = right_child;
 		}
-		
-		if(largest == i){
-			break;
+
+		if(best == i){
+		    break;
 		}
-		
-		swap(&heap->data[i], &heap->data[largest]);
-		
-		i = largest;
+
+		swap(&heap->data[i],
+		     &heap->data[best]);
+
+		i = best;
 	}
 }
 
-int extractMax(Heap* heap){
+int extractRoot(Heap* heap){
 	if(heap == NULL || heap->data == NULL || heap->size == 0){
 		printf("heap not allocated\n");
 		return -1;
@@ -141,6 +161,7 @@ void printHeap(Heap* heap){
 
 int main(){
 	Heap* myheap = allocateHeap();
+	myheap->isMinHeap  = true;
 	insertHeap(myheap,100);
 	insertHeap(myheap,70);
 	insertHeap(myheap,80);
@@ -149,7 +170,7 @@ int main(){
 	printHeap(myheap);
 	insertHeap(myheap,95);
 	printHeap(myheap);
-	extractMax(myheap);
+	extractRoot(myheap);
 	printHeap(myheap);
 	destroyHeap(myheap);
 	return 0;

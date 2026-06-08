@@ -4,17 +4,18 @@
 #include<stdbool.h>
 #include<stddef.h>
 
-typedef struct MaxHeap{
+typedef struct Heap{
 	int* data;
 	size_t size;
 	size_t capacity;
+	bool isMinHeap;
 } Heap;
 
 Heap* allocateHeap();
 void destroyHeap(Heap* heap);
 bool insertHeap(Heap* heap, int data);
-int extractMax(Heap* heap);
-int peekMax(Heap* heap);
+int extractRoot(Heap* heap);
+int peekRoot(Heap* heap);
 bool isHeapEmpty(Heap* heap);
 void printHeap(Heap* heap);
 
