@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include"heap.h"
 
-Heap* allocateHeap(){
+Heap* allocateHeap(bool isMinHeap){
 	Heap* myheap = malloc(sizeof(Heap));
 	if(myheap == NULL){
 		printf("heap allocate fail malloc()!\n");
@@ -11,6 +11,7 @@ Heap* allocateHeap(){
 	myheap->data = NULL;
 	myheap->size = 0;
 	myheap->capacity = 0;
+	myheap->isMinHeap = isMinHeap;
 	return myheap;
 }
 
@@ -81,6 +82,7 @@ bool insertHeap(Heap* heap, int data){
 	}
 	return true;
 }
+
 void heapifyDown(Heap* heap, int i, int heap_size){
 	while(true){
 		int left_child = (2*i) + 1;

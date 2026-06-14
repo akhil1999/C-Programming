@@ -11,13 +11,14 @@ typedef struct Heap{
 	bool isMinHeap;
 } Heap;
 
-Heap* allocateHeap();
+Heap* allocateHeap(bool isMinHeap);
 void destroyHeap(Heap* heap);
 bool insertHeap(Heap* heap, int data);
 int extractRoot(Heap* heap);
 int peekRoot(Heap* heap);
 bool isHeapEmpty(Heap* heap);
 void printHeap(Heap* heap);
+void heapifyUp(Heap* heap, int i);
 void heapifyDown(Heap* heap, int i, int heap_size);
 void swap(int* a, int* b);
 
