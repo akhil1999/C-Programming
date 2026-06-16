@@ -16,6 +16,15 @@ vector: vector.c
 heap:	heap.c
 	gcc heap.c -g -o heap
 
+priorityqueue:	priority_queue.c
+	gcc priority_queue.c -g -o pq
+
+weightedgraph:	weighted_graph.c
+	gcc weighted_graph.c -g -o wg
+
+dijkstra: dijkstra.c weighted_graph.c priority_queue.c
+	gcc dijkstra.c weighted_graph.c priority_queue.c -g -o dijkstra
+
 clean:
 	rm queue
 	rm stack

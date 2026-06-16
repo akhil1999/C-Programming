@@ -26,9 +26,11 @@ int dijkstra(WeightedGraph* g, int source, int destination){
 		if(visited[vertex]) continue;
 		
 		if(vertex == destination){
-			printf("PQ");
-			printPQ(pq);
-			return distance[destination];
+			int temp = distance[destination];
+			free(visited);
+			free(distance);
+			destroyPQ(pq);
+			return temp;
 		}
 		
 		EdgeNode* edge = g->adjlist[vertex];
@@ -46,6 +48,10 @@ int dijkstra(WeightedGraph* g, int source, int destination){
 			edge = edge->next;
 		}
 	}
+	free(visited);
+	free(distance);
+	destroyPQ(pq);
+	return -INT_MAX;
 }
 
 int main(int argc, char* argv[]){
@@ -67,7 +73,7 @@ int main(int argc, char* argv[]){
 	addEdge(g, 5, 2, 2);
 	printGraph(g);
 
-	printf("min distance from %d to %d is %d\n", 1, 7, dijkstra(g, 1, 7));
+	printf("min distance from %d to %d is %d\n", 1, 10, dijkstra(g, 1, 10));
 	destroyGraph(g);
 	return 0;
 }
