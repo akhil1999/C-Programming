@@ -132,7 +132,7 @@ void printPQ(PQ* pq){
 		return;
 	}
 	for(unsigned int i=0; i<pq->size; i++){
-		printf("(%c:%d),", pq->data[i].vertex, pq->data[i].distance);
+		printf("(%d:%d),", pq->data[i].vertex, pq->data[i].distance);
 	}
 	printf("\n");
 	return;
@@ -150,14 +150,14 @@ PQ* allocatePQ(){
 	return pq;
 }
 
-int main(int argc, char* argv[]){
-	PQ* pq = allocatePQ();
-	push(pq, 'A', 1);
-	push(pq, 'B', 4);
-	push(pq, 'C', 0);
-	printPQ(pq);
-	pop(pq);
-	printPQ(pq);
-	destroyPQ(pq);
-	return 0;
-}
+/*int main(int argc, char* argv[]){*/
+/*	PQ* pq = allocatePQ();*/
+/*	push(pq, 'A', 1);*/
+/*	push(pq, 'B', 4);*/
+/*	push(pq, 'C', 0);*/
+/*	printPQ(pq);*/
+/*	pop(pq);*/
+/*	printPQ(pq);*/
+/*	destroyPQ(pq);*/
+/*	return 0;*/
+/*}*/

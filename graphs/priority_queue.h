@@ -19,7 +19,7 @@ void destroyPQ(PQ* pq);
 void push(PQ* pq, int vertex, int distance);
 PQNode pop(PQ* pq);
 PQNode peek(PQ* pq);
-
+void printPQ(PQ* pq);
 bool isPQEmpty(PQ* pq);
 
 #endif
